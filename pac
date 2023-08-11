@@ -51,7 +51,7 @@ else
     shift
     case "$op" in
 	"upgrade")
-	    pacman -Su "$@";;
+	    pacman -S "$@";;
 	"install")
 	    pacman -S "$@";;
 	"search")
