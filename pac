@@ -24,7 +24,10 @@
 
 case "$1" in
     "" | "update")
-	shift
+	if [ $# -eq 1 ]
+	then
+	    shift
+	fi
 	if [ $# -gt 0 ]
 	then
 	    echo "pac: Warn: update doesn't need arguments!"
