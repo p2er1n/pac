@@ -4,34 +4,3 @@ This is a pacman wrapper script for intuitive experience.
 
 You can use apt-like syntax to use pacman in ArchLinux with this script.
 
-* Operators
-
-** update
-
-If you donnot specify any operator, this is the default behavior.
-
-You can explicitly specify it either.
-
-It takes in zero arguments.
-
-** upgrade
-
-zero arguments to upgrade the whole system.
-
-more arguments to upgrade specified packages.
-
-** autoremove
-
-zero arguments needed.
-
-** install
-
-one and more arguments needed.
-
-** search
-
-one and more arguments needed.
-
-** info 
-
-one and more arguments needed.

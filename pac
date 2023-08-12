@@ -8,9 +8,9 @@
 
 # update -> -Sy                      0
 
-# upgrade -> -Su                     0/more
+# upgrade -> -Su/-S                  0/more
 
-# autoremove -> -Qdtq | -R           0
+# autoremove -> -Qdtq | -Rs          0
 
 # install -> -S                      more
 
@@ -42,7 +42,7 @@ case "$1" in
 	    echo "pac: No packages need to be removed!"
 	    exit 1
 	else
-	    pacman -R "$result"
+	    pacman -Rs "$result"
 	fi
 	;;
     "upgrade")
