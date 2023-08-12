@@ -14,56 +14,98 @@
 
 # install -> -S                      more
 
+# uninstall -> -R                    more
+
+# remove -> -Rn                      more
+
 # search -> -Ss                      more
 
 # info -> -Qi                        more
 
-if [ $# -eq 0 ]
-then
-    pacman -Sy
-    exit
-elif [ $# -eq 1 ]
-then
-    case "$1" in
-	"update")
-	    pacman -Sy;;
-	"autoremove")
-	    result=$(pacman -Qdtq)
-	    if [ -z "$result" ]
-	    then
-		echo "No packages need to be removed!"
-		exit 1
-	    else
-		pacman -R "$result"
-	    fi;;
-	"upgrade")
-	    pacman -Su;;
-	"install" | "search" | "info")
-	    echo "$1 needs more than one arguments!"
-	    exit 1;;
-	*)
-	    echo "$1: not supported operator!"
-	    exit 1;;
-    esac
-    exit
-else
-    op=$1
-    shift
-    case "$op" in
-	"upgrade")
-	    pacman -S "$@";;
-	"install")
-	    pacman -S "$@";;
-	"search")
-	    pacman -Ss "$@";;
-	"info")
-	    pacman -Qi "$@";;
-	"update" | "autoremove")
-	    echo "$op doesn't need any argument, but given $# arguments!"
-	    exit 1;;
-	*)
-	    echo "$op: not supported operator!"
-	    exit 1;;
-    esac
-fi
-    
+case "$1" in
+    "" | "update")
+	shift
+	if [ $# -gt 0 ]
+	then
+	    echo "pac: Warn: update doesn't need arguments!"
+	fi
+	pacman -Sy;;
+    "autoremove")
+	shift
+	if [ $# -gt 0 ]
+	then
+	    echo "pac: Warn: autoremove doesn't need arguments!"
+	fi	
+	result=$(pacman -Qdtq)
+	if [ -z "$result" ]
+	then
+	    echo "pac: No packages need to be removed!"
+	    exit 1
+	else
+	    pacman -R "$result"
+	fi
+	;;
+    "upgrade")
+	shift
+	if [ $# -eq 0 ]
+	then
+	    pacman -Su
+	else
+	    pacman -S "$@"
+	fi
+	;;
+    "install")
+	shift
+	if [ $# -eq 0 ]
+	then
+	    echo "pac: install operator needs at least one target!"
+	    exit 1
+	else
+	    pacman -S "$@"
+	fi
+	;;
+    "uninstall")
+	shift
+	if [ $# -eq 0 ]
+	then
+	    echo "pac: uninstall operator needs at least one target!"
+	    exit 1
+	else
+	    pacman -R "$@"
+	fi
+	;;
+    "remove")
+	shift
+	if [ $# -eq 0 ]
+	then
+	    echo "pac: remove operator needs at least one target!"
+	    exit 1
+	else
+	    pacman -Rn "$@"
+	fi
+	;;
+    "search")
+	shift
+	if [ $# -eq 0 ]
+	then
+	    echo "pac: search operator needs at least one target!"
+	    exit 1
+	else
+	    pacman -Ss "$@"
+	fi
+	;;
+    "info")
+	shift
+	if [ $# -eq 0 ]
+	then
+	    echo "pac: info operator needs at least one target!"
+	    exit 1
+	else
+	    pacman -Qi "$@"
+	fi
+	;;
+    *)
+	echo "pac: $1: not supported operator!"
+	exit 1
+	;;
+esac
