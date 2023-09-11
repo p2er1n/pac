@@ -45,7 +45,7 @@ case "$1" in
 	    echo "pac: No packages need to be removed!"
 	    exit 1
 	else
-	    pacman -Rs "$result"
+	    pacman -Rs $result
 	fi
 	;;
     "upgrade")
